@@ -41,8 +41,7 @@ use core\output\notification;
  * @copyright  2021 Brain Station 23 ltd
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class auth_plugin_telegram extends auth_plugin_base
-{
+class auth_plugin_telegram extends auth_plugin_base {
     /**
      * The name of the component. Used by the configuration.
      */
@@ -51,8 +50,7 @@ class auth_plugin_telegram extends auth_plugin_base
     /**
      * Constructor.
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->authtype = 'telegram';
         $this->config = get_config(self::COMPONENT_NAME);
     }
@@ -60,8 +58,7 @@ class auth_plugin_telegram extends auth_plugin_base
     /**
      * Hook for overriding behaviour of login page.
      *  */
-    function loginpage_hook()
-    {
+    public function loginpage_hook() {
         global $PAGE, $CFG;
         echo "
         <script type='text/javascript'>
@@ -69,17 +66,15 @@ class auth_plugin_telegram extends auth_plugin_base
         </script>";
         $PAGE->requires->jquery();
         $PAGE->requires->js_init_code("buttonsAddMethod = 'auto';");
-        $content = str_replace(array("\n", "\r"), array("\\\n", "\\\r",), $this->get_buttons_string());
+        $content = str_replace(array("\n", "\r"), array("\\\n", "\\\r", ), $this->get_buttons_string());
         $PAGE->requires->js_init_code("buttonsCode = '$content';");
         $PAGE->requires->js(new moodle_url($CFG->wwwroot . "/auth/telegram/script.js"));
-        
     }
 
     /**
      * @return string
      */
-    private function get_buttons_string()
-    {
+    private function get_buttons_string() {
         global $CFG;
 
         $content = '
@@ -91,5 +86,4 @@ class auth_plugin_telegram extends auth_plugin_base
     }
 
 
-    
 }

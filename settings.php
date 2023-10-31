@@ -28,7 +28,6 @@ defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading('auth_telegram/security',
         new lang_string('security', 'admin'), ''));
-        
     $settings->add(new admin_setting_configtext('auth_telegram/botusername',
             get_string('botusername', 'auth_telegram'),
             get_string('botusername_help', 'auth_telegram'), '', PARAM_TEXT));
@@ -36,7 +35,5 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('auth_telegram/bottoken',
         get_string('telegrambottoken', 'auth_telegram'),
         get_string('telegrambottoken_help', 'auth_telegram'), '', PARAM_TEXT));
-        
-
 
 }
