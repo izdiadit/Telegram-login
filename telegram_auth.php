@@ -78,7 +78,7 @@ function user_authentication($db, $authdata) {
             $user->firstaccess = 0;
             $user->timecreated = time();
             $user->password = '';
-            $user->email = '';
+            $user->email = $user->username.'@telegram.com';
         if (empty($user->calendartype)) {
             $user->calendartype = $CFG->calendartype;
         }
