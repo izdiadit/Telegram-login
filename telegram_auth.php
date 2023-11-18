@@ -59,18 +59,29 @@ function user_authentication($db, $authdata) {
     function create_newuser($db, $authdata) {
         global $PAGE, $CFG, $DB;
         // User not found, so create it.
+        $sql = "SELECT id FROM {user} ORDER BY id DESC LIMIT 1";
+        $result = $db->get_record_sql($sql);
+        $lastuserid=0;
+
+        if ($result) {
+        $lastuserid = $result->id; // Get the last user ID
+        $lastuserid = $lastuserid + 1; // Increment the last user ID by one
+        } else {
+            $lastuserid = 4;
+        }
+        $telegram_username="t".$lastuserid;
         $id = $db->execute(
             "INSERT INTO {auth_telegram_login}
             (id, first_name, last_name, telegram_id, telegram_username, profile_picture,auth_date,added,updated)
             VALUES (NULL,'".$authdata['first_name']."', '".$authdata['last_name']."', '".$authdata['id']."', '"
-            .$authdata['username']."', '".$authdata['photo_url']."','".$authdata['auth_date']."',1,1)" );
+            .$telegram_username."', '".$authdata['photo_url']."','".$authdata['auth_date']."',1,1)" );
             global $CFG, $DB;
             require_once($CFG->dirroot . '/user/profile/lib.php');
             require_once($CFG->dirroot . '/user/lib.php');
             $notify = true;
             $user = new stdClass();
             $user->auth = "telegram";
-            $user->username = strtolower("telegram_".$authdata['username']);
+            $user->username = strtolower($telegram_username);
             $user->firstname = $authdata['first_name'];
             $user->lastname = $authdata['last_name'];
             $user->confirmed = 1;
